@@ -1,26 +1,5 @@
 """
-Explanation:
-Initialization:
-
-The initial_prompt is the starting point for optimization.
-iterations specify how many times the prompt is updated.
-Interaction:
-
-The get_response function sends the prompt to the OpenAI API and retrieves a response.
-Reward Function:
-
-The reward_function evaluates the quality of the response. Here, it uses the response length as a proxy for quality.
-Optimization:
-
-The optimize_prompt function applies simple gradient ascent by adding adjustments to the prompt based on the reward.
-This example uses random text adjustments, but you can integrate more structured updates based on NLP techniques.
-Output:
-
-The final optimized prompt and training history are returned for review.
-Next Steps:
-Improve the reward function to better capture the response's relevance or correctness.
-Use advanced RL algorithms, such as Proximal Policy Optimization (PPO), for better results.
-Fine-tune the model parameters for specific tasks if you have access to a custom API environment.
+same as trial1.py except that the reward is being used by user (perhaps Shashank)
 """
 
 import os
@@ -61,9 +40,11 @@ def reward_function(response):
     Evaluates the response and returns a reward score.
     Simple example: Longer responses get higher rewards.
     """
-    if not response:
-        return -1  # Penalize if no response
-    return len(response)  # Reward based on response length
+    # if not response:
+    #     return -1  # Penalize if no response
+    # return len(response)  # Reward based on response length
+    reward = input("Enter the reward:")
+    return float(reward)
 
 def optimize_prompt(initial_prompt, iterations=10):
     """
