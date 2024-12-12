@@ -1,13 +1,21 @@
-import openai
+import os
+from openai import OpenAI
+from dotenv import load_dotenv
 import spacy
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+
+
+# Load the OpenAI API key
+openai_api_key = os.getenv("OPENAI_API_KEY")
+# print(openai_api_key)
+
+client = OpenAI(api_key=openai_api_key)
 
 # Load spaCy for linguistic evaluation
 nlp = spacy.load("en_core_web_sm")
 
 # Set your OpenAI API key
-openai.api_key = "your-openai-api-key"
 
 # Define an expected topic or keywords
 EXPECTED_KEYWORDS = ["artificial intelligence", "AI", "machine learning", "technology"]
@@ -17,12 +25,10 @@ def get_response(prompt):
     Interacts with the OpenAI API using the given prompt.
     """
     try:
-        response = openai.Completion.create(
-            engine="text-davinci-003",
-            prompt=prompt,
-            max_tokens=50
-        )
-        return response['choices'][0]['text'].strip()
+        response = client.completions.create(model="gpt-3.5-turbo-instruct",
+        prompt=prompt,
+        max_tokens=50)
+        return response.choices[0].text.strip()
     except Exception as e:
         print(f"Error: {e}")
         return None
