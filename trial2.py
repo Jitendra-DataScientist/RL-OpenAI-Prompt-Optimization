@@ -6,6 +6,7 @@ import os
 from dotenv import load_dotenv
 import random
 from openai import OpenAI
+import json
 
 # Load the OpenAI API key
 openai_api_key = os.getenv("OPENAI_API_KEY")
@@ -78,8 +79,10 @@ def optimize_prompt(initial_prompt, iterations=10):
     return prompt, history
 
 # Example usage
-initial_prompt = "Tell me about AI."
-final_prompt, training_history = optimize_prompt(initial_prompt, iterations=5)
+# initial_prompt = "Tell me about AI."
+initial_prompt = input("Enter initial prompt:")
+final_prompt, training_history = optimize_prompt(initial_prompt, iterations=3)
 
 print("\nFinal Optimized Prompt:", final_prompt)
-print("Training History:", training_history)
+print("Training History:")
+print (json.dumps(training_history,indent=4))
